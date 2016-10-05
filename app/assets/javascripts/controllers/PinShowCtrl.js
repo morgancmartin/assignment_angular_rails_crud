@@ -1,6 +1,6 @@
-app.controller("PinShowCtrl", ["$scope", "Pins", "$stateParams", function($scope, Pins, $stateParams) {
+app.controller("PinShowCtrl", ["$scope", "Pins", "$stateParams", "pin", "$state", function($scope, Pins, $stateParams, pin, $state) {
 
-  $scope.pin = Pins.find($stateParams.id);
+  $scope.pin = pin;
 
   $scope.deletePin = function(){
     $scope.pin.remove().then( function(){
@@ -9,4 +9,4 @@ app.controller("PinShowCtrl", ["$scope", "Pins", "$stateParams", function($scope
   };
 
 
-}])
+}]);

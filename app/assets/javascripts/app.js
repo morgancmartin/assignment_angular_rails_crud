@@ -17,13 +17,23 @@ app.config(function($stateProvider, $urlRouterProvider) {
     .state("show", {
       url: "/pins/:id",
       templateUrl: "templates/pins/show.html",
-      controller: "PinShowCtrl"
+      controller: "PinShowCtrl",
+      resolve: {
+        pin: ['Pins', '$stateParams', function(Pins, $stateParams){
+          return Pins.find($stateParams.id);
+        }]
+      }
     })
 
     .state("edit", {
       url: "/pins/:id/edit",
       templateUrl: "templates/pins/edit.html",
-      controller: "PinEditCtrl"
+      controller: "PinEditCtrl",
+      resolve: {
+        pin: ['Pins', '$stateParams', function(Pins, $stateParams){
+          return Pins.find($stateParams.id);
+        }]
+      }
     });
 
 });

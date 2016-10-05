@@ -1,12 +1,11 @@
-app.factory("Pins", ["Restangular", function(Restangular) {
+app.factory("Pins", ["Restangular", "$stateParams", "$state", function(Restangular, $stateParams, $state) {
 
 
   var _pins;
   var Pins = {};
 
   Pins.find = function(id) {
-    var pin = Restangular.one("pins", id).get().$object;
-    return pin;
+    return Restangular.one("pins", id).get();
   };
 
 
@@ -32,7 +31,7 @@ app.factory("Pins", ["Restangular", function(Restangular) {
   };
 
   var _updatePin = function(params) {
-    Restangular.one('pins', params.id).patch({
+    Restangular.one('pins', $stateParams.id).patch({
       pin: {
         item_name: params.title,
         buy_sell: params.buySell,
@@ -40,23 +39,9 @@ app.factory("Pins", ["Restangular", function(Restangular) {
         user_id: 1              //hard-coded
       }
     }).then(function() {
-
-        return $state.go("show", $stateParams.id)
-      }
-    )
-
-  }
-
-  // Pins.edit = function(params) {
-  //   Restangular.all('pins').put({
-  //     pin: {
-  //       item_name: params.title,
-  //       buy_sell: params.buySell,
-  //       description: params.description,
-  //       user_id: 1              //hard-coded
-  //     }
-  //   })
-  // }
+      $state.go("show", {id: $stateParams.id});
+    });
+  };
 
   Restangular.extendCollection('pins', function(collection){
     collection.create = _createPin;
